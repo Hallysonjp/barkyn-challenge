@@ -17,7 +17,7 @@ docker exec -it php sh
 ```
 Install composer packages
 ```bash
-composer install
+composer install --ignore-platform-reqs
 ```
 
 create .env file
