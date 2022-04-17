@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\BaseController;
@@ -7,6 +8,8 @@ use App\Http\Requests\SubscriptionRequest;
 use App\Http\Resources\Subscription as SubscriptionResource;
 use App\Models\Subscription;
 use App\Models\SubscriptionPets;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends BaseController
 {
@@ -33,8 +36,8 @@ class SubscriptionController extends BaseController
      */
     public function store(SubscriptionRequest $request)
     {
-        $subscription = Subscription::create($request->all());
-        return $this->sendResponse(new SubscriptionResource($subscription), 'Subscription saved succesfully');
+        $result = (new Subscription())->createSubscription($request);
+        return $this->sendResponse(new SubscriptionResource($result), 'Subscription saved succesfully');
     }
 
     /**
@@ -71,6 +74,20 @@ class SubscriptionController extends BaseController
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateNextOrderdate(Request $request, $id)
+    {
+        $subscription = Subscription::find($id);
+        $subscription->update(['next_order_date' => $request->input('next_order_date')]);
+
+        return $this->sendResponse(new SubscriptionResource($subscription), 'Subscription updated successfully.');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -92,13 +109,16 @@ class SubscriptionController extends BaseController
      */
     public function subscriptionsByCustomer($id)
     {
-        $subscriptions = Subscription::with('customer')
+        $subscription = Subscription::with('customer')
             ->where('customer_id', '=', $id)
             ->orderByDesc('id')
             ->first();
 
+        if (is_null($subscription))
+            return $this->sendError('Subscription not found');
+
         return $this->sendResponse(
-            new SubscriptionResource($subscriptions),
+            new SubscriptionResource($subscription),
             'Subscriptions retrieved succesfully'
         );
     }
@@ -129,5 +149,4 @@ class SubscriptionController extends BaseController
 
         return $this->sendResponse([], 'Subscription deleted succesfully.');
     }
-
 }

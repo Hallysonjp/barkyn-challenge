@@ -1,12 +1,16 @@
 <?php
+
 namespace App\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Subscription;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+class Customer extends Model
+{
+    use HasFactory;
 
-class Customer extends Model{
     protected $table = "customers";
 
     protected $fillable = ['gender', 'birth_date'];
@@ -31,7 +35,7 @@ class Customer extends Model{
     {
         $user = new User;
         $user->name = $request->input('name');
-        $user->email= $request->input('email');
+        $user->email = $request->input('email');
         $user->password = app('hash')->make($request->input('password'));
         $user->save();
 

@@ -28,6 +28,8 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('customers/{id}', 'CustomerController@show');
         Route::put('customers/{id}', 'CustomerController@update');
         Route::delete('customers/{id}', 'CustomerController@destroy');
+        Route::put('customers/name/{id}', 'CustomerController@updateCustomerName');
+
 
 
         //Subscription routes
@@ -39,6 +41,7 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('subscriptions/customer/{id}', 'SubscriptionController@subscriptionsByCustomer');
         Route::get('subscriptions/pets/{subscription_id}', 'SubscriptionController@getPetsBySubscription');
         Route::delete('subscriptions/pets/{pet_id}', 'SubscriptionController@destroyPet');
+        Route::put('subscriptions/next_order_date/{id}', 'SubscriptionController@updateNextOrderDate');
 
 
         //Pets routes

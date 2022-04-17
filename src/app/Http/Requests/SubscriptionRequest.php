@@ -18,7 +18,6 @@ class SubscriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => 'int|required',
             'base_price' => 'numeric|required',
             'total_price' => 'numeric|required',
             'next_order_date' => 'date|required'

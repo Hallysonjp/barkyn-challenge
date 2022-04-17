@@ -71,6 +71,20 @@ class CustomerController extends BaseController
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateCustomerName(Request $request, $id)
+    {
+        $customer = Customer::find($id);
+        $customer->user()->update(['name' => $request->input('name')]);
+
+        return $this->sendResponse(new CustomerResource($customer), 'Customer updated successfully.');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

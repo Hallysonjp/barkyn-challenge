@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\BaseController;
@@ -6,7 +7,8 @@ use App\Http\Requests\PetRequest;
 use App\Http\Resources\Pet as PetResource;
 use App\Models\Pet;
 
-class PetController extends BaseController {
+class PetController extends BaseController
+{
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class PetController extends BaseController {
      */
     public function index()
     {
-        $pets = Pet::with('user')->get();
+        $pets = Pet::all();
         return $this->sendResponse(PetResource::collection($pets), 'Pets retrieved succesfully');
     }
 
