@@ -19,9 +19,19 @@ Install composer packages
 ```bash
 composer install
 ```
+
+create .env file
+```bash
+cp .env.example .env
+```
+
 Run migrations
 ```bash
 php artisan migrate:fresh
+```
+Generate JWT_SECRET environment variable
+```bash
+php artisan jwt:secret
 ```
 Run seeds
 ```bash
