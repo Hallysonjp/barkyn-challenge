@@ -6,7 +6,8 @@ RUN apk --no-cache add \
     php7-fpm \
     php7-pdo \
     php7-mbstring \
-    php7-openssl
+    php7-openssl \
+    php7-zip
 
 # for composer & our project depency run smoothly
 RUN apk --no-cache add \
